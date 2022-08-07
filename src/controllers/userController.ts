@@ -4,7 +4,8 @@ import jwt from 'jsonwebtoken'
 import * as userService from '../services/userService.js';
 
 export async function signUp (req: Request, res: Response) {
-    const { user } = req.body;
+    const { name, email, password, height, weight, age } = req.body;
+    const user = { name, email, password, height, weight, age };
     await userService.signUp(user);
     res.sendStatus(201);
 }

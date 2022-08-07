@@ -9,7 +9,7 @@ const userSchema = Joi.object().keys({
     confirmPassword: Joi.string().valid(Joi.ref('password')).required(),
     height: Joi.number().required(),
     weight: Joi.number().required(),
-    age: Joi.number().min(0).required()
+    age: Joi.number().required()
 });
 
 const signinSchema = Joi.object().keys({
@@ -20,7 +20,7 @@ const signinSchema = Joi.object().keys({
 const schemas = {
     userSchema,
     signinSchema,
-    
+
 };
 
 export default schemas;
