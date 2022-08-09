@@ -14,8 +14,9 @@ export async function signIn (req: Request, res: Response) {
     const { email, password } = req.body;
     const user = await userService.signIn(email, password);
     if (!user) throw new Error('user not found');
-
-    const token = jwt.sign({ userId: user.id }, process.env.JWT_TOKEN!, { expiresIn: '1d' });
     
-    res.status(200).send(token);
+    delete user.password;
+    const token = jwt.sign({ user }, process.env.JWT_TOKEN!, { expiresIn: '1d' });
+    
+    res.status(200).json({token});
 }

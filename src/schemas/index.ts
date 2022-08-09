@@ -14,7 +14,7 @@ const userSchema = Joi.object().keys({
 
 const signinSchema = Joi.object().keys({
     email: Joi.string().email().required(),
-    password: Joi.string().min(10).required(),
+    password: Joi.string().min(8).required(),
 });
 
 const schemas = {
