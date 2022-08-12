@@ -20,6 +20,7 @@ model User {
   age        Int
   Program    Program[]
   WorkoutDay WorkoutDay[]
+  Workout    Workout[]
 }
 
 model Program {
@@ -30,6 +31,8 @@ model Program {
   createdAt DateTime @default(now())
   end       String
   Block     Block[]
+
+  @@unique([name, authorId])
 }
 
 model Block {
@@ -43,10 +46,12 @@ model Block {
 
 model Workout {
   id         Int          @id @default(autoincrement())
-  name       String
+  name       String       @unique
   block      Block        @relation(fields: [blockId], references: [id])
   blockId    Int
   videoUrl   String
+  user       User         @relation(fields: [userId], references: [id])
+  userId     Int
   WorkoutSet WorkoutSet[]
 }
 
@@ -63,10 +68,10 @@ model WorkoutSet {
 }
 
 model WorkoutDay {
-  id        Int     @id @default(autoincrement())
-  name      String
-  day       String
-  isComplet Boolean @default(false)
-  user      User    @relation(fields: [userId], references: [id])
-  userId    Int
+  id         Int     @id @default(autoincrement())
+  name       String
+  day        String
+  isComplete Boolean @default(false)
+  user       User    @relation(fields: [userId], references: [id])
+  userId     Int
 }
