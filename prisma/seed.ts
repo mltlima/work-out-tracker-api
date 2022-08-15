@@ -1,11 +1,18 @@
 import prisma from '../src/database.js';
 
 async function main() {
+
+    //create user
+    await prisma.user.createMany({
+      data: [ { name: "Top User", email: "test@mail.com", password: "012345678",
+              height: 180, weight: 80, age: 25} ],
+      skipDuplicates: true,
+    })
     //create programs
     await prisma.program.createMany({
-        data: [ { name: "PPL", end: "01/01/2023", authorId: 1 },
-                { name: "PHAT", end: "01/01/2023", authorId: 1  }, 
-                { name: "nSuns", end: "01/01/2023", authorId: 1  }, ],
+        data: [ { name: "PPL", end: "01/01/2023" },
+                { name: "PHAT", end: "01/01/2023"  }, 
+                { name: "nSuns", end: "01/01/2023"  }, ],
         skipDuplicates: true,
     })
 
