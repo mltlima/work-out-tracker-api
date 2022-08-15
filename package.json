@@ -11,7 +11,8 @@
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon src/index.ts",
-    "migrate": "prisma migrate dev"
+    "migrate": "prisma migrate dev",
+    "start": "node dist/src/index.ts"
   },
   "keywords": [],
   "author": "",
