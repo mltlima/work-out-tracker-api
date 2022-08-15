@@ -19,7 +19,7 @@ const signinSchema = Joi.object().keys({
 
 const workoutSchema = Joi.object().keys({
     name: Joi.string().required(),
-    blockId: Joi.number().required(),
+    blockId: Joi.number().allow(null),
     videoUrl: Joi.string().allow(null),
 });
 
@@ -46,7 +46,7 @@ const editWorkoutDaySchema = Joi.object().keys({
 
 const blockSchema = Joi.object().keys({
     name: Joi.string().required(),
-    day: joi.date().format(['DD/MM/YYYY', 'DD-MM-YYYY']).required(),
+    day: joi.string().valid("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday").required(),
     programId: Joi.number().required(),
 });
 

@@ -3,12 +3,6 @@
 import * as workoutRepository from '../repositories/workoutRepository.js';
 import { conflictError, notFoundError, unauthorizedError } from '../utils/errorUtils.js';
 
-export async function createWorkout(workout: workoutRepository.Workout) {
-    const response = await workoutRepository.getWorkoutByName(workout.name);
-    if (response) throw conflictError("workout already exists");
-
-    await workoutRepository.createWorkout(workout);
-}
 
 export async function getWorkoutById(id: number) {
     const response = await workoutRepository.getWorkoutById(id);
@@ -22,13 +16,29 @@ export async function getWorkouts() {
     return response;
 }
 
+export async function getUserProgram(userId: number) {
+    const response = await workoutRepository.getUserProgramId(userId);
+    if (!response.programId) throw notFoundError("program not found");
+
+    return await workoutRepository.getProgramById(Number(response.programId));
+}
+
+
+export async function getAllPrograms() {
+    return await workoutRepository.getAllPrograms();
+}
+
+export async function addProgramToUser(programId: number, userId: number) {
+    const response = await workoutRepository.addProgramToUser(programId, userId);
+    console.log(response)
+}
+/*
 export async function createProgram(program: workoutRepository.Program) {
     const response = await workoutRepository.getProgramByName(program.name, program.authorId);
-    if (response) throw conflictError("program already exists");
+    if (response.length > 0) throw conflictError("program already exists");
 
     await workoutRepository.createProgram(program);
 }
-
 export async function createWorkoutDay(workouts: Array<workoutRepository.WorkoutDay>) {
     await workoutRepository.createWorkoutDay(workouts);
 }
@@ -40,11 +50,13 @@ export async function editWorkoutDay(id: number, status: boolean, userId: number
 
     await workoutRepository.editWorkoutDay(id, status);
 }
+export async function createWorkout(workout: workoutRepository.Workout) {
+    const response = await workoutRepository.getWorkoutByName(workout.name);
+    console.log(response)
+    if (response.length > 0) throw conflictError("workout already exists");
 
-export async function getUserProgram(userId: number) {
-    return await workoutRepository.getProgramGroupByBlock(userId);
+    await workoutRepository.createWorkout(workout);
 }
-
 export async function deleteProgram(id: number, userId: number) {
     const program = await workoutRepository.getProgramById(id);
     if (!program) throw notFoundError("program not found");
@@ -68,3 +80,4 @@ export async function createBlock(block: workoutRepository.Block) {
 export async function createWorkoutSet(workoutSet: workoutRepository.WorkoutSet) {
     await workoutRepository.createWorkoutSet(workoutSet);
 }
+*/

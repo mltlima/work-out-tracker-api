@@ -7,7 +7,7 @@ export async function validateToken(req: Request, res: Response, next: NextFunct
   const { authorization } = req.headers;
   const token = authorization?.replace("Bearer ", "").trim();
   const secretKey = process.env.JWT_TOKEN;
-
+  
   if (!token) throw unauthorizedError("invalid token");
 
   const user = jwt.verify(token, secretKey!);

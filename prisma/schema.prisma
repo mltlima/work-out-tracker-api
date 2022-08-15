@@ -18,7 +18,8 @@ model User {
   height     Int
   weight     Int
   age        Int
-  Program    Program[]
+  program    Program?     @relation(fields: [programId], references: [id])
+  programId  Int?
   WorkoutDay WorkoutDay[]
   Workout    Workout[]
 }
@@ -26,19 +27,16 @@ model User {
 model Program {
   id        Int      @id @default(autoincrement())
   name      String
-  author    User     @relation(fields: [authorId], references: [id])
-  authorId  Int
   createdAt DateTime @default(now())
   end       String
   Block     Block[]
-
-  @@unique([name, authorId])
+  User      User[]
 }
 
 model Block {
   id        Int       @id @default(autoincrement())
   name      String
-  day       String
+  day       daysWeek
   program   Program   @relation(fields: [programId], references: [id])
   programId Int
   Workout   Workout[]
@@ -52,9 +50,12 @@ model Workout {
   videoUrl   String
   user       User         @relation(fields: [userId], references: [id])
   userId     Int
+  sets       Int
+  reps       Int
   WorkoutSet WorkoutSet[]
 }
 
+//deprecated
 model WorkoutSet {
   id        Int     @id @default(autoincrement())
   name      String
@@ -67,6 +68,7 @@ model WorkoutSet {
   @@unique([name, workoutId])
 }
 
+//deprecated
 model WorkoutDay {
   id         Int     @id @default(autoincrement())
   name       String
@@ -74,4 +76,14 @@ model WorkoutDay {
   isComplete Boolean @default(false)
   user       User    @relation(fields: [userId], references: [id])
   userId     Int
+}
+
+enum daysWeek {
+  Sunday
+  Monday
+  Tuesday
+  Wednesday
+  Thursday
+  Friday
+  Saturday
 }

@@ -16,7 +16,7 @@ export async function signIn (req: Request, res: Response) {
     if (!user) throw new Error('user not found');
     
     delete user.password;
-    const token = jwt.sign({ user }, process.env.JWT_TOKEN!, { expiresIn: '1d' });
+    const token = jwt.sign({ user }, process.env.JWT_TOKEN!);
     
     res.status(200).json({token});
 }
